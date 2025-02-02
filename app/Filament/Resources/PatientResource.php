@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\PatientType;
 use App\Filament\Resources\PatientResource\Pages;
 use App\Filament\Resources\PatientResource\RelationManagers;
 use App\Models\Patient;
@@ -12,6 +13,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Enum;
 
 class PatientResource extends Resource
 {
@@ -32,7 +34,8 @@ class PatientResource extends Resource
                         'dog' => 'Dog',
                         'rabbit' => 'Rabbit',
                     ])
-                    ->required(),
+                    ->required()
+                    ->rules([new Enum(PatientType::class)]),
                 Forms\Components\DatePicker::make('date_of_birth')
                     ->required()
                     ->maxDate(now()),
